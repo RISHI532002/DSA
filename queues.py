@@ -48,3 +48,8 @@ class Queue:
             memory.append(temp.value)
             temp = temp.next
         return memory
+    
+    def peek(self):
+        if self.isEmpty():
+            return None
+        return self.front.value
