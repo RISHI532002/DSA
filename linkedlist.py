@@ -6,12 +6,15 @@ class Node:
 class LinkedList:
     def __init__(self):
         self.head = None
-    
+
+    def isEmpty(self):
+        return self.head is None
+
     def insert_at_start(self, value):
         new_node = Node(value)
         new_node.next = self.head
         self.head = new_node
-    
+
     def insert_at_end(self, value):
         new_node = Node(value)
         if not self.head:
@@ -21,7 +24,7 @@ class LinkedList:
         while temp.next:
             temp = temp.next
         temp.next = new_node
-    
+
     def insert_at_index(self, index, value):
         """
         zero based index
@@ -41,10 +44,9 @@ class LinkedList:
             temp = temp.next
         new_node.next = temp.next
         temp.next = new_node
-    
+
     def search_by_value(self, value):
         if not self.head:
-            print("List is empty")
             return False
         temp = self.head
         while temp:
@@ -52,10 +54,9 @@ class LinkedList:
                 return True
             temp = temp.next
         return False
-    
+
     def search_by_index(self, index):
         if not self.head:
-            print("List is empty")
             return None
         if index<0:
             raise IndexError("List index out of range")
@@ -70,12 +71,45 @@ class LinkedList:
             raise IndexError("List index out of range")
         return temp.next.value
 
-    def display(self):
-        if not self.head:
-            print("None")
+    def delete_at_start(self):
+        if self.isEmpty():
+            return
+        self.head = self.head.next
+
+    def delete_at_end(self):
+        if self.isEmpty():
+            return
+        if self.head.next is None:
+            self.head = None
             return
         temp = self.head
-        while temp:
-            print(temp.value, end="->")
+        while temp.next.next:
             temp = temp.next
-        print("END")
+        temp.next = None
+
+    def delete_at_index(self, index):
+        if index<0:
+            raise IndexError("List index out of range")
+        if self.isEmpty():
+            return
+        if index==0:
+            self.head = self.head.next
+            return
+        temp = self.head
+        for _ in range(index - 1):
+            if temp.next is None:
+                raise IndexError("List index out of range")
+            temp = temp.next
+        if temp.next is None:
+            raise IndexError("List index out of range")
+        temp.next = temp.next.next
+
+    def display(self):
+        memory = []
+        if not self.head:
+            raise IndexError("List is empty")
+        temp = self.head
+        while temp:
+            memory.append(temp.value)
+            temp = temp.next
+        return memory
