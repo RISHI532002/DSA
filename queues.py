@@ -1,5 +1,5 @@
 """
-Implement queue using Linked List
+Design Queue with add/remove methods, and with capacity
 """
 
 class Node:
@@ -8,17 +8,20 @@ class Node:
         self.next = None
 
 class Queue:
-    def __init__(self):
+    def __init__(self, capacity = None):
         self.front = None
         self.rear = None
         self.size = 0
+        self.capacity = capacity
     
     def isEmpty(self):
         return self.front is None
 
     def enqueue(self, value):
+        if self.capacity and self.capacity<=self.size:
+            raise IndexError("Queue is full")
         new_node = Node(value)
-        if self.rear is None:
+        if self.isEmpty():
             self.front = new_node
             self.rear = new_node
         else:
@@ -26,22 +29,20 @@ class Queue:
             self.rear = new_node
         self.size += 1
     
-    def dequeue(self) -> any:   
+    def dequeue(self):
         if self.isEmpty():
-            raise IndexError("Queue is Empty")
-        temp_node = self.front
+            return None
+        temp = self.front
         self.front = self.front.next
         if self.front is None:
             self.rear = None
         self.size -= 1
-        return temp_node.value
-    
+        return temp.value
+
     def queue_size(self):
         return self.size
     
     def get_queue(self):
-        if self.isEmpty():
-            return []
         memory = []
         temp = self.front
         while temp:
