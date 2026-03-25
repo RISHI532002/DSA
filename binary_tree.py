@@ -47,3 +47,26 @@ def find_max_depth(root):
         if node.right:
             stack.append((node.right,level+1))
     return maxDepth
+
+def search_dfs(root, value):
+    if root is None:
+        return False
+    if root.val == value:
+        return True
+    if search_dfs(root.left, value) or search_dfs(root.right, value):
+        return True
+    return False
+
+def search_using_stack(root, target):
+    if root is None:
+        return False
+    stack = [root]
+    while stack:
+        node = stack.pop()
+        if node.val == target:
+            return True
+        if node.left:
+            stack.append(node.left)
+        if node.right:
+            stack.append(node.right)
+    return False
