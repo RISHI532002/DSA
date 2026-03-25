@@ -30,3 +30,20 @@ def post_order_dfs(node):
     post_order_dfs(node.left)
     post_order_dfs(node.right)
     print(node.val, end=" ")
+
+def find_max_depth(root):
+    """
+    Find the depth using stack
+    """
+    if root is None:
+        return 0
+    stack = [(root, 1)]
+    maxDepth = 0
+    while stack:
+        node, level = stack.pop()
+        maxDepth = max(maxDepth, level)
+        if node.left:
+            stack.append((node.left,level+1))
+        if node.right:
+            stack.append((node.right,level+1))
+    return maxDepth
